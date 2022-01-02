@@ -1,3 +1,0 @@
-extraEnvs:
-  - name: STORAGE_BUCKET
-    value: "{{ cookiecutter.gcstorage.storageBucket }}"
