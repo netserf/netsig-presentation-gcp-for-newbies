@@ -14,6 +14,9 @@ NetSIG is a Special Interest Group focused on computer networking. We're affilia
 * [NetSIG site](https://vicpimakers.ca/https://vicpimakers.ca/netsig/)
 * [Victoria PiMakers site](https://vicpimakers.ca/)
 
+## Where can I find the cheatsheet for this presentation?
+* [GCP Cheat Sheet](gcp-cheat-sheet.txt)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

@@ -1,0 +1,28 @@
+# Cheat Sheet for NetSIG presentation - GCP for Newbies
+# For more details:
+# https://github.com/netserf/netsig-presentation-gcp-for-newbies
+
+# configure compute defaults
+gcloud config set compute/region us-west2
+gcloud config set compute/zone us-west2-c
+
+# delete default firewall-rules
+gcloud compute firewall-rules list 2>&1 | grep NAME
+gcloud compute firewall-rules delete default-allow-icmp default-allow-internal default-allow-rdp default-allow-ssh --quiet
+
+# delete default VPC
+gcloud compute networks delete default --quiet
+
+# configure a simple dual-stack VPC
+gcloud compute networks create my-v6-vpc --subnet-mode=custom
+gcloud compute networks subnets create subnet01 --network=my-v6-vpc --range=10.100.100.0/24 --stack-type=IPV4_IPV6 --ipv6-access-type=EXTERNAL
+
+# configure the VPC's firewall for IPv4/IPv6 ping and ssh
+gcloud compute firewall-rules create allow-v4-ssh --network=my-v6-vpc --allow=tcp:22 --direction=INGRESS
+gcloud compute firewall-rules create allow-v4-icmp --network=my-v6-vpc --allow=icmp --direction=INGRESS
+gcloud compute firewall-rules create allow-v6-ssh --direction=INGRESS --network=my-v6-vpc --allow=tcp:22 --source-ranges=0::0/0
+gcloud compute firewall-rules create allow-v6-icmp --direction=INGRESS --network=my-v6-vpc --allow=58 --source-ranges=0::0/0
+    # note - icmpv6 requires protocol number, rather than an alias
+
+# provision a dual-stack VM
+gcloud compute instances create my-dualstack-vm --subnet=subnet01 --stack-type=IPV4_IPV6
