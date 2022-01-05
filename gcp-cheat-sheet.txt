@@ -48,11 +48,6 @@ $ gcloud compute instances create myvm2
 $ gcloud compute instances describe myvm2
 $ gcloud compute instances ssh mymv2
 
-# TODO - Clean this up
-# Configure compute defaults
-gcloud config set compute/region us-west2
-gcloud config set compute/zone us-west2-c
-
 # Delete default firewall-rules
 gcloud compute firewall-rules list 2>&1 | grep NAME
 gcloud compute firewall-rules delete default-allow-icmp default-allow-internal default-allow-rdp default-allow-ssh --quiet
