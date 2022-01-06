@@ -1,7 +1,7 @@
 # NetSIG Presentation - Google Cloud for Newbies
 
 ## Presentation Summary
-In this session we'll look at Google Cloud and go over some basic concepts in Google Cloud networking. Topics will include VPCs, subnets, logging, and telemetry (time permitting). We'll also look at the GCP console and Cloud SDK tools.
+In this session we'll look at Google Cloud and go over some basic concepts in Google Cloud networking. Topics will include Compute Engine, VPCs, subnets, logging, and telemetry. We'll also look at the GCP console and Cloud SDK tools.
 
 ## Presentation Slides
 * [Google Cloud for Newbies](netsig-presentation-gcp-for-newbies.pdf)
