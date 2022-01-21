@@ -1,2 +1,5 @@
-# Keep the '?' in the headers
+# all rules by default
+all
+# keep the '?' in the headers
 exclude_rule 'MD026'
+
