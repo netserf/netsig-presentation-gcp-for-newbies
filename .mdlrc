@@ -1,3 +1,2 @@
-all
-exclude_rule "MD026"
+rules "~MD026"
 
