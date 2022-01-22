@@ -3,50 +3,58 @@
 # https://github.com/netserf/netsig-presentation-gcp-for-newbies
 
 # Cloud Shell Editor (within GCP Cloud Shell)
-$ echo "testing cloud shell editor" > foo
-$ edit foo
+echo "testing cloud shell editor" > foo
+edit foo
 
 # Add network packages to improve your Cloud Shell experience 
-$ sudo apt install -y iputils-ping nmap ncat \
-  traceroute arping
+sudo apt install -y iputils-ping nmap ncat traceroute arping
 
 # Review Cloud Shell's basic network configuration
-$ ifconfig -a
-$ route -vn
-$ curl api.ipify.org
-$ ping vicpimakers.ca
-$ ping -6 vicpimakers.ca   # currently no public IPv6 support
+ifconfig -a
+route -vn
+curl api.ipify.org
+ping vicpimakers.ca
+ping -6 vicpimakers.ca   # currently no public IPv6 support
 
 # From the Internet to Cloud Shell VM
-$ ping <cloud shell public IP>
-$ nmap <cloud shell public IP>
+ping <cloud shell public IP>
+nmap <cloud shell public IP>
 
 # GCP SDK - gcloud basics
-$ gcloud config list
-$ gcloud config get-value project
-$ gcloud config set compute/region us-west2
-$ gcloud config set compute/zone us-west2-c
-$ gcloud config list
+gcloud config list
+gcloud config get-value project
+gcloud config set compute/region us-west1
+gcloud config set compute/zone us-west2-b
+gcloud config list
+gcloud compute project-info add-metadata --metadata \
+  google-compute-default-region=us-west1,google-compute-default-zone=us-west-1-b
 
 # Examine GCP services using gcloud
-$ gcloud services list --available | head
-$ gcloud services list --available | grep NAME | wc -l
-$ gcloud services list --enabled | grep NAME
-$ gcloud services enable container.googleapis.com  # k8s
-$ gcloud services list --enabled | grep NAME
+gcloud services list --enabled | grep NAME
+gcloud services list --available | grep NAME | wc -l
+gcloud services enable container.googleapis.com  # k8s
+gcloud services list --enabled | grep NAME
 
 # Examine GCP projects using gcloud
-$ gcloud projects list
-$ gcloud projects describe [project-name]
+gcloud projects list
+gcloud projects describe [project-name]
 
 # Working with GCE using gcloud
-$ gcloud compute instances list
-$ gcloud compute instances delete myvm
-$ gcloud compute instances list
+gcloud compute instances list
+gcloud compute instances delete instance-1
+gcloud compute instances list
+
 # New VM instance
-$ gcloud compute instances create myvm2
-$ gcloud compute instances describe myvm2
-$ gcloud compute instances ssh mymv2
+gcloud compute instances create myvm
+gcloud compute instances describe myvm
+gcloud compute instances ssh mymv
+
+# Metadata Server
+grep metadata /etc/hosts
+curl -H "Metadata-Flavor:Google" \
+  metadata.google.internal/computeMetadata/
+curl -H "Metadata-Flavor:Google" \
+  metadata.google.internal/computeMetadata/v1/project/attributes/ssh-keys
 
 # Delete default firewall-rules
 gcloud compute firewall-rules list 2>&1 | grep NAME
@@ -64,7 +72,7 @@ gcloud compute firewall-rules create allow-v4-ssh --network=my-v6-vpc --allow=tc
 gcloud compute firewall-rules create allow-v4-icmp --network=my-v6-vpc --allow=icmp --direction=INGRESS
 gcloud compute firewall-rules create allow-v6-ssh --direction=INGRESS --network=my-v6-vpc --allow=tcp:22 --source-ranges=0::0/0
 gcloud compute firewall-rules create allow-v6-icmp --direction=INGRESS --network=my-v6-vpc --allow=58 --source-ranges=0::0/0
-    # note - icmpv6 requires protocol number, rather than an alias
+    # Note - icmpv6 requires protocol number (58), rather than an alias
 
 # Provision a dual-stack VM
 gcloud compute instances create my-dualstack-vm --subnet=subnet01 --stack-type=IPV4_IPV6
