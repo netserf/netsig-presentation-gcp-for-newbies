@@ -2,12 +2,12 @@
 # For more details:
 # https://github.com/netserf/netsig-presentation-gcp-for-newbies
 
+# Add network packages to improve your Cloud Shell experience 
+sudo apt install -y iputils-ping nmap ncat traceroute arping
+
 # Cloud Shell Editor (within GCP Cloud Shell)
 echo "testing cloud shell editor" > foo
 edit foo
-
-# Add network packages to improve your Cloud Shell experience 
-sudo apt install -y iputils-ping nmap ncat traceroute arping
 
 # Review Cloud Shell's basic network configuration
 ifconfig -a
@@ -24,20 +24,8 @@ nmap <cloud shell public IP>
 gcloud config list
 gcloud config get-value project
 gcloud config set compute/region us-west1
-gcloud config set compute/zone us-west2-b
+gcloud config set compute/zone us-west1-b
 gcloud config list
-gcloud compute project-info add-metadata --metadata \
-  google-compute-default-region=us-west1,google-compute-default-zone=us-west-1-b
-
-# Examine GCP services using gcloud
-gcloud services list --enabled | grep NAME
-gcloud services list --available | grep NAME | wc -l
-gcloud services enable container.googleapis.com  # k8s
-gcloud services list --enabled | grep NAME
-
-# Examine GCP projects using gcloud
-gcloud projects list
-gcloud projects describe [project-name]
 
 # Working with GCE using gcloud
 gcloud compute instances list
@@ -49,12 +37,14 @@ gcloud compute instances create myvm
 gcloud compute instances describe myvm
 gcloud compute instances ssh mymv
 
-# Metadata Server
+# Metadata Server (from the GCE VM)
 grep metadata /etc/hosts
 curl -H "Metadata-Flavor:Google" \
   metadata.google.internal/computeMetadata/
 curl -H "Metadata-Flavor:Google" \
   metadata.google.internal/computeMetadata/v1/project/attributes/ssh-keys
+
+# Exercise: IPv6 dual stack deployment
 
 # Delete default firewall-rules
 gcloud compute firewall-rules list 2>&1 | grep NAME
